@@ -25,6 +25,9 @@ static const unsigned int alphas[][3]      = {
 	[SchemeSel]  = { OPAQUE, baralpha, borderalpha },
 };
 
+/*viewontag*/
+static const Bool viewontag         = True;     /* Switch view on tag switch */
+
 /* tagging */
 static const char *tags[] = { "", "", "", "", "", "" };
 
