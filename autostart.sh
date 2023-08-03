@@ -14,7 +14,7 @@ settings() {
 
 daemons() {
     [ $1 ] && sleep $1
-    # $_thisdir/statusbar/statusbar.sh cron &   # 开启状态栏定时更新
+    $_thisdir/statusbar/statusbar.sh cron &   # 开启状态栏定时更新
     # xss-lock -- ~/scripts/blurlock.sh &       # 开启自动锁屏程序
     fcitx5 &                                  # 开启输入法
     clash &
