@@ -29,11 +29,11 @@ cron() {
     let i=10
     while true; do
         # [ $((i % 10)) -eq 0 ] && ~/scripts/set_screen.sh check # 每10秒检查显示器状态 以此自动设置显示器
-        [ $((i % 300)) -eq 0 ] && feh --randomize --bg-fill ~/Pictures/wallpapers # 每300秒更新壁纸
+        feh --randomize --bg-fill ~/Pictures/wallpapers && [ $((i % 300)) -eq 0 ] # 每300秒更新壁纸
         sleep 10; let i+=10
     done
 }
 
-settings 1 &                                  # 初始化设置项
-daemons 3 &                                   # 后台程序项
-cron 5 &                                      # 定时任务项
+settings &                                  # 初始化设置项
+daemons &                                   # 后台程序项
+cron &                                      # 定时任务项
