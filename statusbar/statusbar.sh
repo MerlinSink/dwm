@@ -1,7 +1,7 @@
 #!/bin/sh
 
 dwm_date () {
-  date '+%Y年%m月%d日 %a %H:%M'
+  date -u '+%Y年%m月%d日 %a %H:%M'
 }
 
 while true
