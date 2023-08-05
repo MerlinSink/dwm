@@ -34,7 +34,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "", "", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "", "", "", "" };
 
 /* 自定义脚本位置 */
 static const char *autostartscript = "$DWM/autostart.sh";
@@ -80,14 +80,14 @@ static const Layout layouts[] = {
 static const char *rofi[] = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "16x16", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_grave,  togglescratch,  {.v = scratchpadcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
+	{ MODKEY|ShiftMask,             XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstackvis,  {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstackvis,  {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_j,      focusstackhid,  {.i = +1 } },
@@ -99,10 +99,10 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,                       XK_q,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
+	{ MODKEY|ShiftMask,             XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_g,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} },
+	/* { MODKEY,                       XK_m,      setlayout,      {.v = &layouts[3]} }, */
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_f,      togglefullscr,  {0} },
@@ -119,12 +119,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_1,      0               )
 	TAGKEYS(                        XK_2,      1               )
 	TAGKEYS(                        XK_3,      2               )
-	TAGKEYS(                        XK_4,      3               )
-	TAGKEYS(                        XK_5,      4               )
-	TAGKEYS(                        XK_6,      5               )
-	TAGKEYS(                        XK_7,      6               )
-	TAGKEYS(                        XK_8,      7               )
-	TAGKEYS(                        XK_9,      8               )
+	TAGKEYS(                        XK_b,      3               )
+	TAGKEYS(                        XK_m,      4               )
+	TAGKEYS(                        XK_r,      5               )
+	TAGKEYS(                        XK_t,      6               )
+	TAGKEYS(                        XK_c,      7               )
+	TAGKEYS(                        XK_v,      8               )
 };
 
 /* button definitions */
