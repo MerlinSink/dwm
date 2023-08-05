@@ -1,17 +1,18 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const int newclientathead    = 1;        /* 定义新窗口在栈顶还是栈底 */
+static const unsigned int borderpx  = 5;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
-static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
-static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappih    = 25;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 25;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 25;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 25;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const Bool viewontag         = True;     /* Switch view on tag switch */
-static const char *fonts[]          = { "SourceCodePro:size=16" };
+static const char *fonts[]          = {  "JetBrainsMono Nerd Font:style=medium:size=16", "monospace:size=16" };
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -31,7 +32,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "", "", "", "", "", "6", "7", "8", "9" };
 
 /* 自定义脚本位置 */
 static const char *autostartscript = "$DWM/autostart.sh";
@@ -44,7 +45,8 @@ static const Rule rules[] = {
 	 */
 	/* class            instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",           NULL,       NULL,       0,            1,           -1 },
-	/* { "chrome",         NULL,       NULL,       3,            0,           -1 }, */
+  {"chrome",          NULL,       NULL,       1 << 3,       0,           -1 }, // chrome     tag -> 
+
 };
 
 /* layout(s) */
@@ -55,8 +57,8 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "﬿",      tile },    /* first entry is default */
-	{ "﩯",      magicgrid },    /* first entry is default */
+	{ "﬿",        tile },    /* first entry is default */
+	{ "﩯",        magicgrid },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -103,16 +105,16 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	TAGKEYS(                        XK_1,      0               )
+	TAGKEYS(                        XK_2,      1               )
+	TAGKEYS(                        XK_3,      2               )
+	TAGKEYS(                        XK_4,      3               )
+	TAGKEYS(                        XK_5,      4               )
+	TAGKEYS(                        XK_6,      5               )
+	TAGKEYS(                        XK_7,      6               )
+	TAGKEYS(                        XK_8,      7               )
+	TAGKEYS(                        XK_9,      8               )
 };
 
 /* button definitions */
