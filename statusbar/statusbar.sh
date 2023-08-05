@@ -1,54 +1,94 @@
-#! /bin/bash
+#!/bin/sh
 
-thisdir=$(cd $(dirname $0);pwd)
-tempfile=$thisdir/temp
-touch $tempfile
+# A modular status bar for dwm
+# Joe Standring <git@joestandring.com>
+# GNU GPLv3
 
-# 设置某个模块的状态 update cpu mem ...
-update() {
-    [ ! "$1" ] && refresh && return                                      # 当指定模块为空时 结束
-    bash $thisdir/packages/$1.sh                                         # 执行指定模块脚本
-    shift 1; update $*                                                   # 递归调用
+# Dependencies: xorg-xsetroot
+
+# Import functions with "$include /route/to/module"
+# It is recommended that you place functions in the subdirectory ./bar-functions and use: . "$DIR/bar-functions/dwm_example.sh"
+
+# Store the directory the script is running from
+LOC=$(readlink -f "$0")
+DIR=$(dirname "$LOC")
+
+# Change the appearance of the module identifier. if this is set to "unicode", then symbols will be used as identifiers instead of text. E.g. [📪 0] instead of [MAIL 0].
+# Requires a font with adequate unicode character support
+export IDENTIFIER="unicode"
+
+# Change the charachter(s) used to seperate modules. If two are used, they will be placed at the start and end.
+export SEP1="["
+export SEP2="]"
+
+# Import the modules
+#. "$DIR/bar-functions/dwm_alarm.sh"
+#. "$DIR/bar-functions/dwm_alsa.sh"
+#. "$DIR/bar-functions/dwm_backlight.sh"
+# . "$DIR/bar-functions/dwm_battery.sh"
+#. "$DIR/bar-functions/dwm_ccurse.sh"
+#. "$DIR/bar-functions/dwm_cmus.sh"
+#. "$DIR/bar-functions/dwm_connman.sh"
+#. "$DIR/bar-functions/dwm_countdown.sh"
+#. "$DIR/bar-functions/dwm_currency.sh"
+. "$DIR/bar-functions/dwm_date.sh"
+#. "$DIR/bar-functions/dwm_keyboard.sh"
+#. "$DIR/bar-functions/dwm_loadavg.sh"
+#. "$DIR/bar-functions/dwm_mail.sh"
+#. "$DIR/bar-functions/dwm_mpc.sh"
+# . "$DIR/bar-functions/dwm_networkmanager.sh"
+# . "$DIR/bar-functions/dwm_pulse.sh"
+#. "$DIR/bar-functions/dwm_resources.sh"
+#. "$DIR/bar-functions/dwm_spotify.sh"
+#. "$DIR/bar-functions/dwm_transmission.sh"
+#. "$DIR/bar-functions/dwm_vpn.sh"
+#. "$DIR/bar-functions/dwm_weather.sh"
+#. "$DIR/bar-functions/dwm_network_speed.sh"
+
+parallelize() {
+    while true
+    do
+        printf "Running parallel processes\n"
+        #dwm_networkmanager &
+        #dwm_weather &
+        sleep 5
+    done
 }
+parallelize &
 
-# 处理状态栏点击
-click() {
-    [ ! "$1" ] && return                                                 # 未传递参数时 结束
-    bash $thisdir/packages/$1.sh click $2                                # 执行指定模块脚本
-    update $1                                                            # 更新指定模块
-    refresh                                                              # 刷新状态栏
-}
-
-# 更新状态栏
-refresh() {
-    _icons='';_music='';_wifi='';_cpu='';_mem='';_date='';_vol='';_bat=''# 重置所有模块的状态为空
-    source $tempfile                                                     # 从 temp 文件中读取模块的状态
-    xsetroot -name "$_icons$_music$_wifi$_cpu$_mem$_date$_vol$_bat"      # 更新状态栏
-}
-
-# 启动定时更新状态栏 不同的模块有不同的刷新周期 注意不要重复启动该func
-cron() {
-    echo > $tempfile                                                     # 清空 temp 文件
-    let i=0
-    while true; do
-        to=()                                                            # 存放本次需要更新的模块
-        [ $((i % 10)) -eq 0 ]  && to=(${to[@]} wifi)                     # 每 10秒  更新 wifi
-        [ $((i % 20)) -eq 0 ]  && to=(${to[@]} cpu mem vol icons)        # 每 20秒  更新 cpu mem vol icons
-        [ $((i % 300)) -eq 0 ] && to=(${to[@]} bat)                      # 每 300秒 更新 bat
-        [ $((i % 5)) -eq 0 ]   && to=(${to[@]} date music)               # 每 5秒   更新 date
-        [ $i -lt 30 ] && to=(wifi cpu mem date vol icons bat)            # 前 30秒  更新所有模块
-        update ${to[@]}                                                  # 将需要更新的模块传递给 update
-        sleep 5; let i+=5
-    done &
-}
-
-# cron 启动定时更新状态栏
-# update 更新指定模块 `update cpu` `update mem` `update date` `update vol` `update bat` 等
-# updateall 更新所有模块 | check 检查模块是否正常(行为等于updateall)
-# * 处理状态栏点击 `cpu 按键` `mem 按键` `date 按键` `vol 按键` `bat 按键` 等
-case $1 in
-    cron) cron ;;
-    update) shift 1; update $* ;;
-    updateall|check) update icons music wifi cpu mem date vol bat ;;
-    *) click $1 $2 ;; # 接收clickstatusbar传递过来的信号 $1: 模块名  $2: 按键(L|M|R|U|D)
-esac
+# Update dwm status bar every second
+while true
+do
+    # Append results of each func one by one to the upperbar string
+    upperbar=""
+    #upperbar="$upperbar$(dwm_alarm)"
+    #upperbar="$upperbar$(dwm_alsa)"
+    #upperbar="$upperbar$(dwm_backlight)"
+    # upperbar="$upperbar$(dwm_battery)"
+    #upperbar="$upperbar$(dwm_ccurse)"
+    #upperbar="$upperbar$(dwm_cmus)"
+    #upperbar="$upperbar$(dwm_connman)"
+    #upperbar="$upperbar$(dwm_countdown)"
+    #upperbar="$upperbar$(dwm_currency)"
+    upperbar="$upperbar$(dwm_date)"
+    #upperbar="$upperbar$(dwm_keyboard)"
+    #upperbar="$upperbar$(dwm_loadavg)"
+    #upperbar="$upperbar$(dwm_mail)"
+    #upperbar="$upperbar$(dwm_mpc)"
+    # upperbar="$upperbar$(dwm_pulse)"
+    #upperbar="$upperbar$(dwm_resources)"
+    #upperbar="$upperbar$(dwm_spotify)"
+    #upperbar="$upperbar$(dwm_transmission)"
+    #upperbar="$upperbar$(dwm_vpn)"
+    #upperbar="$upperbar${__DWM_BAR_NETWORKMANAGER__}"
+    #upperbar="$upperbar${__DWM_BAR_WEATHER__}"
+    #upperbar="$upperbar$(dwm_network_speed)"; dwm_network_speed_record
+   
+    # Append results of each func one by one to the lowerbar string
+    lowerbar=""
+    
+    xsetroot -name "$upperbar"
+    # Uncomment the line below to enable the lowerbar 
+    #xsetroot -name "$upperbar;$lowerbar"
+    sleep 1
+done
