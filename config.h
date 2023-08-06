@@ -41,15 +41,15 @@ static const char nord_green[]                          = "#A3BE8C";
 static const char nord_purple[]                         = "#B48EAD";
 
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
+	/*                  fg         bg         border   */
 
 	/* [SchemeNorm] = { col_gray3, col_gray1, col_gray2 }, */
 	/* [SchemeSel]  = { col_gray4, col_cyan,  col_cyan  }, */
-  [SchemeNorm] = { nord_white,              nord_polar_darkest_blue,       nord_polar_darkest_blue },
-	[SchemeSel]  = { nord_polar_darkest_blue, nord_frost_darker_light_blue,  nord_red                },
+  [SchemeNorm] = { nord_white,              nord_polar_darkest_blue,      nord_polar_darkest_blue },
+	[SchemeSel]  = { nord_polar_darkest_blue, nord_frost_darker_light_blue, nord_red                },
 
-	[SchemeHov]  = { col_gray4, col_cyan,  col_cyan  },
-	[SchemeHid]  = { col_cyan,  col_gray1, col_cyan  },
+	[SchemeHov]  = { nord_white,              nord_polar_darkest_blue,      nord_polar_darkest_blue },
+	[SchemeHid]  = { nord_polar_darkest_blue, nord_frost_darker_light_blue, nord_red                },
 };
 static const unsigned int alphas[][3]      = {
     /*               fg      bg        border*/
@@ -76,10 +76,10 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
-static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
-static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
+static const float mfact        = 0.55; /* factor of master area size [0.05..0.95] */
+static const int nmaster        = 1;    /* number of clients in master area */
+static const int resizehints    = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1;    /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -104,7 +104,7 @@ static const Layout layouts[] = {
 static const char *rofi[] = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "16x80", NULL };
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "80x18", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -140,15 +140,15 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_s,      show,           {0} },
 	{ MODKEY|ShiftMask,             XK_s,      showall,        {0} },
 	{ MODKEY|ShiftMask,             XK_h,      hide,           {0} },
-	TAGKEYS(                        XK_1,      0               )
-	TAGKEYS(                        XK_2,      1               )
-	TAGKEYS(                        XK_3,      2               )
-	TAGKEYS(                        XK_b,      3               )
-	TAGKEYS(                        XK_m,      4               )
-	TAGKEYS(                        XK_r,      5               )
-	TAGKEYS(                        XK_t,      6               )
-	TAGKEYS(                        XK_c,      7               )
-	TAGKEYS(                        XK_v,      8               )
+	TAGKEYS(                        XK_1,      0)
+	TAGKEYS(                        XK_2,      1)
+	TAGKEYS(                        XK_3,      2)
+	TAGKEYS(                        XK_b,      3)
+	TAGKEYS(                        XK_m,      4)
+	TAGKEYS(                        XK_r,      5)
+	TAGKEYS(                        XK_t,      6)
+	TAGKEYS(                        XK_c,      7)
+	TAGKEYS(                        XK_v,      8)
 };
 
 /* button definitions */
